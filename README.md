@@ -8,4 +8,12 @@ Check for the following:
 
 ### Git
 
-> sudo pacman -S git
+To ensure version control
+
+`` sudo pacman -S git
+
+### Stow
+
+Allows us to have linked dotfiles in a single directory
+
+`` sudo pacman -S stow
