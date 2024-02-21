@@ -10,10 +10,14 @@ Check for the following:
 
 To ensure version control
 
-`` sudo pacman -S git
+```
+sudo pacman -S git
+```
 
 ### Stow
 
 Allows us to have linked dotfiles in a single directory
 
-`` sudo pacman -S stow
+```
+sudo pacman -S stow
+```
