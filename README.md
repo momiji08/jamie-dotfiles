@@ -29,7 +29,8 @@ Stow will create a link between the files in this repo and
 files in your system. Ensure the structure remains the same,
 i.e. HOME/.config/nvim = dotfiles/.config/nvim.
 
-Simply use .stow in root of the dotfiles(this repo).
+Simply use .stow in root of the dotfiles(this repo). If you have the
+corresponding files it should create a symlink to this repo instead.
 
 For arch:
 
