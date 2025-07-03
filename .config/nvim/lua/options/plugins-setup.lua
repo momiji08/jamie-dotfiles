@@ -42,7 +42,13 @@ return packer.startup(function(use)
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
-	use("theprimeagen/harpoon")
+
+	-- harpoon
+	use({
+		"theprimeagen/harpoon",
+		branch = "harpoon2",
+		requires = { "nvim-lua/plenary.nvim" },
+	})
 
 	-- lsp
 	use("neovim/nvim-lspconfig")
@@ -62,7 +68,7 @@ return packer.startup(function(use)
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
 	})
-	use("jose-elias-alvarez/typescript.nvim") -- potentially discontinued, use pmizio/typescript-tools
+	-- use("jose-elias-alvarez/typescript.nvim") -- potentially discontinued, use pmizio/typescript-tools
 
 	-- autocompletion snippets
 	use("hrsh7th/nvim-cmp")
@@ -77,7 +83,7 @@ return packer.startup(function(use)
 	use("lukas-reineke/indent-blankline.nvim")
 	use("kyazdani42/nvim-web-devicons")
 	use("nvim-lualine/lualine.nvim") -- enhanced statusline
-	use("rcarriga/nvim-notify") -- notification window, requres 24bit colour
+	-- use("rcarriga/nvim-notify") -- notification window, requres 24bit colour
 	use("MunifTanjim/nui.nvim") -- Component Library
 
 	-- Text editing modification
@@ -93,8 +99,11 @@ return packer.startup(function(use)
 		end,
 	})
 
+	-- cscope
+	-- use({ "dhananjaylatkar/cscope_maps.nvim", opts = {} })
+
 	-- formatting and linting
-	use("jose-elias-alvarez/null-ls.nvim")
+	use("nvimtools/none-ls.nvim")
 	use("jayp0521/mason-null-ls.nvim")
 
 	-- java development
@@ -103,31 +112,31 @@ return packer.startup(function(use)
 	-- mips arm development asm
 	use("harenome/vim-mipssyntax")
 
-	-- Neorg note-taking plugin
-	use("nvim-neorg/neorg", {
-		ft = "norg",
-		after = {
-			"nvim-treesitter",
-			"telescope",
-		},
-		run = ":Neorg sync-parsers",
-		cmd = "Neorg",
-	}) -- tag = "*"
+	-- -- Neorg note-taking plugin
+	-- use("nvim-neorg/neorg", {
+	-- 	ft = "norg",
+	-- 	after = {
+	-- 		"nvim-treesitter",
+	-- 		"telescope",
+	-- 	},
+	-- 	run = ":Neorg sync-parsers",
+	-- 	cmd = "Neorg",
+	-- }) -- tag = "*"
 
-	-- Leetcode
-	use("kawre/leetcode.nvim", {
-		run = ":TSUpdate html",
-		after = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-telescope/telescope.nvim",
-			"nvim-lua/plenary.nvim", -- required by telescope
-			"MunifTanjim/nui.nvim",
-
-			-- optional
-			"rcarriga/nvim-notify",
-			"nvim-tree/nvim-web-devicons",
-		},
-	})
+	-- -- Leetcode
+	-- use("kawre/leetcode.nvim", {
+	-- 	run = ":TSUpdate html",
+	-- 	after = {
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"nvim-telescope/telescope.nvim",
+	-- 		"nvim-lua/plenary.nvim", -- required by telescope
+	-- 		"MunifTanjim/nui.nvim",
+	--
+	-- 		-- optional
+	-- 		"rcarriga/nvim-notify",
+	-- 		"nvim-tree/nvim-web-devicons",
+	-- 	},
+	-- })
 
 	-- latex integration
 	use("lervag/vimtex")

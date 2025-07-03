@@ -21,3 +21,5 @@ require("options.plugins.lsp.lspsaga")
 require("options.plugins.lsp.lspconfig")
 require("options.plugins.lsp.lsp")
 require("options.plugins.lsp.null-ls")
+
+-- require("cscope_maps").setup()

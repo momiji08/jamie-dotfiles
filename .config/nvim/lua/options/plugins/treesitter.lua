@@ -3,7 +3,7 @@ if not setup then
 	return
 end
 
-vim.notify = require("notify")
+-- vim.notify = require("notify")
 
 treesitter.setup({
 	-- A list of parser names, or "all" (the five listed parsers should always be installed)

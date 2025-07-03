@@ -10,15 +10,15 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 null_ls.setup({
 	sources = {
-		formatting.prettier,
-		formatting.eslint_d,
-		formatting.stylua,
-		diagnostics.eslint_d.with({ -- js/ts linter
-			-- only enable eslint if root has .eslintrc.js
-			condition = function(utils)
-				return utils.root_has_file(".eslintrc.json") -- change file extension if you use something else
-			end,
-		}),
+		-- formatting.prettier,
+		-- formatting.eslint_d,
+		-- formatting.stylua,
+		-- diagnostics.eslint_d.with({ -- js/ts linter
+		-- 	-- only enable eslint if root has .eslintrc.js
+		-- 	condition = function(utils)
+		-- 		return utils.root_has_file(".eslintrc.json") -- change file extension if you use something else
+		-- 	end,
+		-- }),
 	},
 	on_attach = function(current_client, bufnr)
 		if current_client.supports_method("textDocument/formatting") then

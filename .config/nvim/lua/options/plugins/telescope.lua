@@ -3,8 +3,8 @@ if not setup then
 	return
 end
 
-vim.notify = require("notify")
-require("telescope").load_extension("notify")
+-- vim.notify = require("notify")
+-- require("telescope").load_extension("notify")
 
 telescope.setup({
 	defaults = {

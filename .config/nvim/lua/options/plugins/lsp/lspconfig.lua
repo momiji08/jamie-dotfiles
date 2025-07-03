@@ -4,17 +4,19 @@ if not lspconfig_status then
 	return
 end
 
+-- local util = require("lspconfig.util")
+--
 -- import cmp-nvim-lsp plugin safely
 local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not cmp_nvim_lsp_status then
 	return
 end
 
--- import typescript plugin safely
-local typescript_setup, typescript = pcall(require, "typescript")
-if not typescript_setup then
-	return
-end
+-- -- import typescript plugin safely
+-- local typescript_setup, typescript = pcall(require, "typescript")
+-- if not typescript_setup then
+-- 	return
+-- end
 
 local keymap = vim.keymap
 
@@ -37,12 +39,12 @@ local on_attach = function(client, bufnr)
 	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
 	keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", opts) -- see outline on right hand side
 
-	-- typescript specific keymaps (e.g. rename file and update imports)
-	if client.name == "tsserver" then
-		keymap.set("n", "<leader>rf", ":TypescriptRenameFile<CR>") -- rename file and update imports
-		keymap.set("n", "<leader>oi", ":TypescriptOrganizeImports<CR>") -- organize imports (not in youtube nvim video)
-		keymap.set("n", "<leader>ru", ":TypescriptRemoveUnused<CR>") -- remove unused variables (not in youtube nvim video)
-	end
+	-- -- typescript specific keymaps (e.g. rename file and update imports)
+	-- if client.name == "ts_ls" then
+	-- 	keymap.set("n", "<leader>rf", ":TypescriptRenameFile<CR>") -- rename file and update imports
+	-- 	keymap.set("n", "<leader>oi", ":TypescriptOrganizeImports<CR>") -- organize imports (not in youtube nvim video)
+	-- 	keymap.set("n", "<leader>ru", ":TypescriptRemoveUnused<CR>") -- remove unused variables (not in youtube nvim video)
+	-- end
 end
 
 -- used to enable autocompletion (assign to every lsp server config)
@@ -63,12 +65,12 @@ lspconfig["html"].setup({
 })
 
 -- configure typescript server with plugin
-typescript.setup({
-	server = {
-		capabilities = capabilities,
-		on_attach = on_attach,
-	},
-})
+-- typescript.setup({
+-- 	server = {
+-- 		capabilities = capabilities,
+-- 		on_attach = on_attach,
+-- 	},
+-- })
 
 -- configure css server
 lspconfig["cssls"].setup({
@@ -92,6 +94,11 @@ lspconfig["emmet_ls"].setup({
 -- configure c and c++ server
 
 lspconfig["clangd"].setup({
+	-- cmd = {
+	-- 	"clangd",
+	-- 	"--compile-commands-dir=" .. vim.fn.expand("~/cs3231/asst1-src/kern/compile/ASST1"),
+	-- },
+	-- root_dir = util.root_pattern(".git", "kern"),
 	capabilities = capabilities,
 	on_attach = on_attach,
 	filetypes = { "c", "cpp" },
