@@ -30,10 +30,11 @@ local on_attach = function(client, bufnr)
 	keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- got to declaration
 	keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
 	keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
+	keymap.set("n", "gI", "<cmd>Lspsaga goto_definition<CR>", opts) -- go to implementation
 	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
 	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
 	keymap.set("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
-	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
+	keymap.set("n", "<leadr>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
 	keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
 	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
 	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
@@ -52,11 +53,31 @@ local capabilities = cmp_nvim_lsp.default_capabilities()
 
 -- Change the Diagnostic symbols in the sign column (gutter)
 -- (not in youtube nvim video)
-local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
-for type, icon in pairs(signs) do
-	local hl = "DiagnosticSign" .. type
-	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
+-- local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
+-- for type, icon in pairs(signs) do
+-- 	local hl = "DiagnosticSign" .. type
+-- 	vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+-- end
+local signs = {
+  [vim.diagnostic.severity.ERROR] = " ",
+  [vim.diagnostic.severity.WARN]  = " ",
+  [vim.diagnostic.severity.HINT]  = "ﴞ ",
+  [vim.diagnostic.severity.INFO]  = " ",
+}
+
+vim.diagnostic.config({
+  signs = {
+    text = signs,
+    -- Optional: numhl and linehl if you want line/number highlights
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+      [vim.diagnostic.severity.WARN]  = "DiagnosticSignWarn",
+      [vim.diagnostic.severity.HINT]  = "DiagnosticSignHint",
+      [vim.diagnostic.severity.INFO]  = "DiagnosticSignInfo",
+    },
+  },
+  severity_sort = true,  -- ensures more severe signs have higher priority
+})
 
 -- configure html server
 lspconfig["html"].setup({
@@ -92,13 +113,17 @@ lspconfig["emmet_ls"].setup({
 })
 
 -- configure c and c++ server
-
+-- duplicate causing errors with mason
 lspconfig["clangd"].setup({
-	-- cmd = {
-	-- 	"clangd",
-	-- 	"--compile-commands-dir=" .. vim.fn.expand("~/cs3231/asst1-src/kern/compile/ASST1"),
-	-- },
-	-- root_dir = util.root_pattern(".git", "kern"),
+
+	cmd = {
+        "clangd",
+        "--background-index",
+        "--pch-storage=memory",
+	},
+    root_dir = function()
+        return vim.fn.expand("~/cs3231/asst2-src/kern")
+    end,
 	capabilities = capabilities,
 	on_attach = on_attach,
 	filetypes = { "c", "cpp" },

@@ -2,8 +2,8 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap
 
--- keymap.set("i", "jk", "<ESC>")
--- keymap.set("i", "jj", "<ESC>")
+keymap.set("i", "jk", "<ESC>")
+keymap.set("i", "jj", "<ESC>")
 keymap.set("n", "<ESC>", ":noh<CR>")
 -- keymap.set("n", "x", '"_x') -- x doesn't enter register after deleting
 

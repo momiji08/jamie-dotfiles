@@ -37,8 +37,6 @@ return packer.startup(function(use)
 	use("christoomey/vim-tmux-navigator") -- tumux & split window navigation
 	use({
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.4",
-		-- or                            , branch = '0.1.x',
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
@@ -108,6 +106,14 @@ return packer.startup(function(use)
 
 	-- java development
 	use("mfussenegger/nvim-jdtls")
+
+    -- install without yarn or npm
+use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+})
+
+use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 
 	-- mips arm development asm
 	use("harenome/vim-mipssyntax")
