@@ -32,6 +32,7 @@ mason_lspconfig.setup({
 })
 mason_null_ls.setup({
 	ensure_installed = {
+        "rust-analyzer",
 		"prettier",
 		"stylua",
 		"eslint_d",
