@@ -12,6 +12,7 @@ require("options.plugins.nvim-cmp")
 require("options.plugins.gitsigns")
 require("options.plugins.ibl")
 require("options.plugins.telescope")
+-- require("options.plugins.rustaceanvim")
 
 --lsp
 require("options.plugins.lsp.mason")

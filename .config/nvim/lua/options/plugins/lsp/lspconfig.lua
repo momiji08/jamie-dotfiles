@@ -1,5 +1,5 @@
 -- import lspconfig plugin safely
-local lspconfig_status, lspconfig = pcall(require, "lspconfig")
+local lspconfig_status, lspconfig = pcall(vim.lsp.config)
 if not lspconfig_status then
 	return
 end
@@ -93,6 +93,16 @@ lspconfig["html"].setup({
 -- 	},
 -- })
 
+-- configure rust server
+lspconfig["rust_analyzer"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+    checkOnSave = {
+        command = "clippy",
+    },
+ 	filetypes = { "rs" },
+})
+
 -- configure css server
 lspconfig["cssls"].setup({
 	capabilities = capabilities,
@@ -118,12 +128,10 @@ lspconfig["clangd"].setup({
 
 	cmd = {
         "clangd",
-        "--background-index",
-        "--pch-storage=memory",
 	},
-    root_dir = function()
-        return vim.fn.expand("~/cs3231/asst2-src/kern")
-    end,
+    -- root_dir = function()
+    --     return vim.fn.expand("~/cs3231/asst2-src/kern")
+    -- end,
 	capabilities = capabilities,
 	on_attach = on_attach,
 	filetypes = { "c", "cpp" },

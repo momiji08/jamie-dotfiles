@@ -68,7 +68,9 @@ return packer.startup(function(use)
 	})
 
     -- rust
-    use 'simrat39/rust-tools.nvim'
+    use('mrcjkb/rustaceanvim')
+    -- debugging
+    use('mfussenegger/nvim-dap')
 
 	-- use("jose-elias-alvarez/typescript.nvim") -- potentially discontinued, use pmizio/typescript-tools
 
@@ -117,7 +119,7 @@ return packer.startup(function(use)
 --     run = function() vim.fn["mkdp#util#install"]() end,
 -- })
 
-use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 
 	-- mips arm development asm
 	use("harenome/vim-mipssyntax")

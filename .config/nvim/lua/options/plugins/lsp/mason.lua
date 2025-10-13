@@ -16,25 +16,26 @@ end
 -- enable mason
 mason.setup()
 
-mason_lspconfig.setup({
-	-- list of servers for mason to install
-	ensure_installed = {
-		"vtsls",
-		"html",
-		"cssls",
-		"tailwindcss",
-		"lua_ls",
-		"emmet_ls",
-		-- "clangd",
-	},
-	-- auto-install configured servers (with lspconfig)
-	automatic_installation = false, -- not the same as ensure_installed
-})
-mason_null_ls.setup({
-	ensure_installed = {
-        "rust-analyzer",
-		"prettier",
-		"stylua",
-		"eslint_d",
-	},
-})
+-- causing issues - duplicate servers
+-- mason_lspconfig.setup({
+-- 	-- list of servers for mason to install
+-- 	ensure_installed = {
+-- 		"vtsls",
+-- 		"html",
+-- 		"cssls",
+-- 		"tailwindcss",
+-- 		"lua_ls",
+-- 		"emmet_ls",
+--         "rust_analyzer",
+-- 		"clangd",
+-- 	},
+-- 	-- auto-install configured servers (with lspconfig)
+-- 	automatic_installation = false, -- not the same as ensure_installed
+-- })
+-- mason_null_ls.setup({
+-- 	ensure_installed = {
+-- 		"prettier",
+-- 		"stylua",
+-- 		"eslint_d",
+-- 	},
+-- })
