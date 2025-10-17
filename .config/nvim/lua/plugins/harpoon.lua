@@ -11,11 +11,11 @@ return {
 
       -- Keymaps
       vim.keymap.set("n", "<leader>ha", function()
-        list:add()
+          list:add()
       end, { desc = "Harpoon add file" })
 
       vim.keymap.set("n", "<C-e>", function()
-        harpoon.ui:toggle_quick_menu(list)
+          harpoon.ui:toggle_quick_menu(list)
       end, { desc = "Harpoon quick menu" })
 
       -- Jump to files
@@ -25,7 +25,10 @@ return {
       vim.keymap.set("n", "<leader>h4", function() list:select(4) end)
 
       -- Clear
-      vim.keymap.set("n", "<leader>hx", function() list:clear() end)
+      vim.keymap.set("n", "<leader>hX", function()
+          list:clear() end, { desc = "Clear all poons" })
+      vim.keymap.set("n", "<leader>hx", function()
+          list:remove() end, { desc = "Clear current poon" })
 
       -- Next / Prev
       local current_index = 1
