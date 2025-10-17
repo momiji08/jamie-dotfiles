@@ -1,28 +1,8 @@
-require("options.plugins-setup")
-require("options.core.options")
-require("options.core.keymaps")
-require("options.core.colorscheme")
+-- Settings
+require("config.options")
 
-require("options.plugins.harpoon")
-require("options.plugins.treesitter")
-require("options.plugins.comment")
-require("options.plugins.nvim-tree")
-require("options.plugins.lualine")
-require("options.plugins.nvim-cmp")
-require("options.plugins.gitsigns")
-require("options.plugins.ibl")
-require("options.plugins.telescope")
--- require("options.plugins.rustaceanvim")
+-- Keymaps
+require("config.keymaps")
 
---lsp
-require("options.plugins.lsp.mason")
-require("options.plugins.lsp.lspsaga")
-require("options.plugins.lsp.lspconfig")
-require("options.plugins.lsp.lsp")
-require("options.plugins.lsp.null-ls")
-
--- require("cscope_maps").setup()
--- require("options.plugins.nvim-notify")
--- require("options.plugins.leetcode")
--- require("after.ftplugin.assembly")
--- require("options.plugins.neorg")
+-- Loads Lazy.nvim and plugins
+require("config.lazy")
