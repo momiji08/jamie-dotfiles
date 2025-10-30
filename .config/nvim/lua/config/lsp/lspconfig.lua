@@ -35,24 +35,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", opts)
     end,
 })
--- local keymap = vim.keymap
--- local on_attach = function(bufnr)
---   local opts = { noremap = true, silent = true, buffer = bufnr }
---
---   keymap.set("n", "gf", "<cmd>Lspsaga finder<CR>", opts)
---   keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
---   keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts)
---   keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
---   keymap.set("n", "gI", "<cmd>Lspsaga goto_definition<CR>", opts)
---   keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
---   keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts)
---   keymap.set("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
---   keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts)
---   keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts)
---   keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts)
---   keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
---   keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", opts)
--- end
 
 -- ========================
 -- nvim-cmp capabilities
@@ -108,9 +90,22 @@ vim.lsp.config.clangd = {
 vim.lsp.enable("clangd")
 
 vim.lsp.config.rust_analyzer = {
-    checkOnSave = { command = "clippy" },
-    filetypes = { "rs" },
-}
+  checkOnSave = { command = "clippy" },
+  filetypes = { "rust" },
+  on_attach = function(client, bufnr)
+    -- Format on save rustfmt required
+    if client.supports_method("textDocument/formatting") then
+      local group = vim.api.nvim_create_augroup("RustLspFormatOnSave", { clear = false })
+      vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = group,
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr })
+        end,
+      })
+    end
+  end,}
 vim.lsp.enable("rust_analyzer")
 
 vim.lsp.config.lua_ls = {
