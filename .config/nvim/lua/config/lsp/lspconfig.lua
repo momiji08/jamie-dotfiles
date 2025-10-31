@@ -90,23 +90,21 @@ vim.lsp.config.clangd = {
 vim.lsp.enable("clangd")
 
 vim.lsp.config.rust_analyzer = {
-  checkOnSave = { command = "clippy" },
-  filetypes = { "rust" },
-  on_attach = function(client, bufnr)
-    -- Format on save rustfmt required
-    if client.supports_method("textDocument/formatting") then
-      local group = vim.api.nvim_create_augroup("RustLspFormatOnSave", { clear = false })
-      vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = group,
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.format({ bufnr = bufnr })
-        end,
-      })
-    end
-  end,}
+    checkOnSave = {
+        command = "clippy"
+    },
+    filetypes = {
+        "rs"
+    },
+}
 vim.lsp.enable("rust_analyzer")
+-- format on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.rs",
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
+})
 
 vim.lsp.config.lua_ls = {
     settings = {
