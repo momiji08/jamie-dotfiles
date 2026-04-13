@@ -129,6 +129,7 @@ vim.lsp.config.lua_ls = {
     },
 }
 vim.lsp.enable("lua_ls")
+vim.lsp.enable("basedpyright")
 -- -- Setup all servers using new API
 -- for server, config in pairs(servers) do
 --   local ok, srv = pcall(function()
