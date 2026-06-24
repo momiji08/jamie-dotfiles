@@ -44,3 +44,13 @@ opt.undofile = true
 
 --conceal
 opt.conceallevel = 2
+
+-- Automatically set 2-space indentation for frontend/web files
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact", "css", "html" },
+    callback = function()
+        vim.opt_local.tabstop = 2
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.expandtab = true
+    end,
+})
