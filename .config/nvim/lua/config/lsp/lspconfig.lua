@@ -39,9 +39,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 -- ========================
 -- nvim-cmp capabilities
 -- ========================
--- local cmp_status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
--- if not cmp_status then return end
--- local capabilities = cmp_nvim_lsp.default_capabilities()
+local cmp_status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+local capabilities = cmp_status and cmp_nvim_lsp.default_capabilities() or {}
+
+-- Helper to inject capabilities into configs dynamically
+local function make_config(config)
+    return vim.tbl_extend("force", { capabilities = capabilities }, config or {})
+end
 
 -- ========================
 -- Diagnostics signs
@@ -70,35 +74,58 @@ vim.diagnostic.config({
 -- ========================
 -- LSP servers
 -- ========================
+-- Frontend & Web
+vim.lsp.config.htmlls = make_config()
+vim.lsp.enable("htmlls")
 
-vim.lsp.config.htmlls = {}
--- vim.lsp.enable({ "ts_ls", "cssls", "tailwindcssls", "htmlls", "svelte" })
+vim.lsp.config.cssls = make_config()
+vim.lsp.enable("cssls")
 
-vim.lsp.config.cssls = {}
+vim.lsp.config.tailwindcss = make_config()
+vim.lsp.enable("tailwindcss")
 
-vim.lsp.config.tailwindcss = {}
+-- TypeScript / TSX Integration
+vim.lsp.config.vtsls = make_config({
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    settings = {
+        vtsls = {
+            autoUseWorkspaceTsdk = true,
+            experimental = { completion = { enableServerSideFuzzyMatch = true } }
+        }
+    }
+})
 
-vim.lsp.config.emmet_ls = {
+vim.lsp.enable("vtsls")
+
+vim.lsp.config.emmet_ls = make_config({
     filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-}
+})
 vim.lsp.enable("emmet_ls")
 
-vim.lsp.config.clangd = {
+-- Swift (System dependent toolchain)
+vim.lsp.config.sourcekit = make_config({
+    filetypes = { "swift", "objective-c", "objective-cpp" },
+})
+vim.lsp.enable("sourcekit")
+
+-- Systems & Backend LSPs
+vim.lsp.config.clangd = make_config({
     filetypes = { "c", "cpp" },
     cmd = { "clangd" },
-}
+})
 vim.lsp.enable("clangd")
 
-vim.lsp.config.rust_analyzer = {
-    checkOnSave = {
-        command = "clippy"
+vim.lsp.config.rust_analyzer = make_config({
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = { command = "clippy" },
+        }
     },
-    filetypes = {
-        "rs"
-    },
-}
+    filetypes = { "rs" },
+})
 vim.lsp.enable("rust_analyzer")
--- format on save
+
+-- Format on save for Rust
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.rs",
   callback = function()
@@ -106,30 +133,28 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
-vim.lsp.config.lua_ls = {
+-- Lua Configuration
+vim.lsp.config.lua_ls = make_config({
     settings = {
         Lua = {
-            runtime = {
-                version = "LuaJIT",
-            },
-            diagnostics = {
-                globals = { "vim" }
-            },
+            runtime = { version = "LuaJIT" },
+            diagnostics = { globals = { "vim" } },
             workspace = {
-                -- library = vim.api.nvim_get_runtime_file("", true),
                 library = {
                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                     [vim.fn.stdpath("config") .. "/lua"] = true,
                 },
             },
-            telemetry = {
-                enable = false,
-            },
+            telemetry = { enable = false },
         },
     },
-}
+})
 vim.lsp.enable("lua_ls")
+
+-- Python
+vim.lsp.config.basedpyright = make_config()
 vim.lsp.enable("basedpyright")
+
 -- -- Setup all servers using new API
 -- for server, config in pairs(servers) do
 --   local ok, srv = pcall(function()
