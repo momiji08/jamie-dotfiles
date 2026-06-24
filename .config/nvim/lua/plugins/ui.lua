@@ -9,6 +9,7 @@ return {
     },
     {
         "nvim-lualine/lualine.nvim",
+        dependencies = { "catppuccin/nvim"},
         config = function()
             require("config.plugin-config.lualine")
         end,

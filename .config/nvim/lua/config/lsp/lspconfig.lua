@@ -85,17 +85,17 @@ vim.lsp.config.tailwindcss = make_config()
 vim.lsp.enable("tailwindcss")
 
 -- TypeScript / TSX Integration
-vim.lsp.config.vtsls = make_config({
-    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-    settings = {
-        vtsls = {
-            autoUseWorkspaceTsdk = true,
-            experimental = { completion = { enableServerSideFuzzyMatch = true } }
-        }
-    }
-})
-
-vim.lsp.enable("vtsls")
+-- vim.lsp.config.vtsls = make_config({
+--     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+--     settings = {
+--         vtsls = {
+--             autoUseWorkspaceTsdk = true,
+--             experimental = { completion = { enableServerSideFuzzyMatch = true } }
+--         }
+--     }
+-- })
+--
+-- vim.lsp.enable("vtsls")
 
 vim.lsp.config.emmet_ls = make_config({
     filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },

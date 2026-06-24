@@ -6,10 +6,10 @@ end
 -- local lualine_palenight = require("lualine.themes.palenight")
 
 lualine.setup({
-  options = {
-    -- theme = lualine_palenight
-    theme = "catppuccin"
-  },
+  -- options = {
+  --   -- theme = lualine_palenight
+  --   -- theme = "catppuccin"
+  -- },
   sections = {
       lualine_c = {
           {
